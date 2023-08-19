@@ -1,26 +1,20 @@
-{% load humanize %}
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-  <body>
-    <h1>Job Postings</h1>
-    <!--[if lt IE 7]>
-      <p class="browsehappy">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="#">upgrade your browser</a> to improve your experience.
+{% extends 'job_board/_base.html' %} {% load humanize %} {% block content %}
+
+<div class="flex justify-center w-10/12 mx-auto flex-wrap gap-6">
+  {% for posting in job_postings %}
+  <a class="w-1/4 text-center" href="{% url 'job_detail' posting.id %}">
+    <div
+      class="border rounded px-8 py-10 bg-gray-50 hover:bg-gray-100 hover:cursor-pointer"
+    >
+      <p class="text-2xl pb-2">{{posting.title}}</p>
+      <hr class="py-2" />
+      <p class="font-semibold pb-2">Company: {{posting.company}}</p>
+      <p class="text-xl pb-2">Salary: ${{posting.salary|intcomma}}</p>
+      <p class="underline underline-offset-2 text-blue-500 hover:text-blue-400">
+        View Details
       </p>
-    <![endif]-->
-    <ul>
-      {% for posting in job_postings %}
-      <li>
-        {{ posting.title|title }} | {{ posting.description|title }} |
-        ${{posting.salary|intcomma }}
-      </li>
-      {% endfor %}
-    </ul>
-    <script src="" async defer></script>
-  </body>
-</html>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock content %}
